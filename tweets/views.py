@@ -1,3 +1,16 @@
+from django.http import HttpResponse, Http404,JsonResponse
 from django.shortcuts import render
 
-# Create your views here.
+from .models import Tweet
+
+def home_view(request, *args, **kwargs):
+    return HttpResponse("<h1>hello world</h1>")
+
+
+def tweet_detail_view(request, tweet_id, *args, **kwargs):
+
+    try:
+        obj = Tweet.objects.get(id=tweet_id)
+    except:
+        raise Http404
+    return HttpResponse(f"<h1>hello world {tweet_id} - {obj.content}</h1>")
